@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  origin:
+    build:
+      context: ./origin-site
+    container_name: origin
+    networks:
+      - cdn-net
+
+  shield:
+    build:
+      context: ./origin-shield
+    container_name: shield
+    depends_on:
+      - origin
+    networks:
+      - cdn-net
+
+  edge:
+    build:
+      context: ./edge
+    container_name: edge
+    ports:
+      - "8082:80"
+    depends_on:
+      - shield
+    networks:
+      - cdn-net
+
+networks:
+  cdn-net:
+    driver: bridge
