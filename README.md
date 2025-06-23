@@ -191,6 +191,10 @@ ab -n 1000 -c 10 http://localhost:8082/
    - Check cache headers in browser dev tools
    - Ensure cache directories are writable
 
+### Challenges Faced
+
+1. Limited experience with Nginx configuration and rate limiting mechanisms.
+
 ### Debug Mode
 Run with verbose logging:
 ```bash
