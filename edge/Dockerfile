@@ -1,2 +1,2 @@
-FROM nginx:alpine
-COPY nginx.conf /etc/nginx/nginx.conf
+FROM openresty/openresty:alpine
+COPY nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
