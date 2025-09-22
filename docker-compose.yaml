@@ -8,10 +8,10 @@ services:
     networks:
       - cdn-net
 
-  shield:
+  mcache:
     build:
-      context: ./origin-shield
-    container_name: shield
+      context: ./mcache
+    container_name: mcache
     depends_on:
       - origin
     networks:
@@ -24,7 +24,7 @@ services:
     ports:
       - "8082:80"
     depends_on:
-      - shield
+      - mcache
     networks:
       - cdn-net
 
