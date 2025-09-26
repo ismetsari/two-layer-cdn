@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-origin
+  labels:
+    app: origin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: origin
+  template:
+    metadata:
+      labels:
+        app: origin
+    spec:
+      containers:
+        - name: origin
+          image: ismetss/two-layer-cdn-origin
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
