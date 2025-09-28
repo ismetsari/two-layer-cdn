@@ -11,5 +11,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: 30080   # you can change this if you want a different port
-  type: NodePort        # exposes edge outside cluster
+  type: ClusterIP        # exposes edge outside cluster

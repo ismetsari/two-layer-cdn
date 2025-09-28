@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deployment-origin
+  name: mcache
   labels:
-    app: origin
+    app: mcache
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: origin
+      app: mcache
   template:
     metadata:
       labels:
-        app: origin
+        app: mcache
     spec:
       containers:
-        - name: origin
-          image: ismetss/two-layer-cdn-origin
+        - name: mcache
+          image: ismetss/two-layer-cdn-mcache
           imagePullPolicy: Always
           ports:
             - containerPort: 80

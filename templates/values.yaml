@@ -1,0 +1,70 @@
+# Default values for two-layer-cdn.
+
+# Number of replicas for each component
+replicaCount: 1
+
+# Define images for each service
+images:
+  edge:
+    repository: ismetss/two-layer-cdn-edge
+    tag: latest
+    pullPolicy: IfNotPresent
+  mcache:
+    repository: ismetss/two-layer-cdn-mcache
+    tag: latest
+    pullPolicy: IfNotPresent
+  origin:
+    repository: ismetss/two-layer-cdn-origin
+    tag: latest
+    pullPolicy: IfNotPresent
+
+# Service configs
+services:
+  edge:
+    type: ClusterIP  # Or NodePort if you want to reach from outside
+    port: 80
+  mcache:
+    type: ClusterIP
+    port: 80
+  origin:
+    type: NodePort
+    port: 80
+    nodePort: 30081
+
+# Ingress (HAProxy or Nginx controller)
+ingress:
+  enabled: true
+  className: "haproxy"
+  annotations: {}
+  hosts:
+    - host: cdn.local
+      paths:
+        - path: /
+          pathType: Prefix
+          backend: edge
+        - path: /mcache
+          pathType: Prefix
+          backend: mcache
+        - path: /origin
+          pathType: Prefix
+          backend: origin
+  tls: []
+
+# Resources (tweak if needed)
+resources:
+  limits:
+    cpu: 500m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+# Probes
+livenessProbe:
+  httpGet:
+    path: /
+    port: 80
+readinessProbe:
+  httpGet:
+    path: /
+    port: 80
